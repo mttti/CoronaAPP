@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -56,7 +57,7 @@ namespace CoronaAPP
 
         public MainWindow()
         {
-            InitializeComponent();         
+            InitializeComponent();
             DownloadJasonData();
             UpdateGui();
         }
@@ -67,8 +68,8 @@ namespace CoronaAPP
             SelectCountry.Items.Add("World");
             foreach (var item in CountriesList)
             {
-                if(item.Country_text != "World")
-                SelectCountry.Items.Add(item.Country_text);
+                if (item.Country_text != "World")
+                    SelectCountry.Items.Add(item.Country_text);
             }
 
             SelectCountry.SelectedIndex = 0;
@@ -76,6 +77,8 @@ namespace CoronaAPP
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
+            SaveToDatabase.IsEnabled = true;
+            SaveAsTxt.IsEnabled = true;
             string country = "";
             string date = "";
             string deaths = "";
@@ -84,7 +87,7 @@ namespace CoronaAPP
 
             for (int i = 0; i < CountriesList.Count; i++)
             {
-                if(CountriesList[i].Country_text == SelectCountry.Text)
+                if (CountriesList[i].Country_text == SelectCountry.Text)
                 {
                     country = CountriesList[i].Country_text;
                     date = CountriesList[i].LastUpdate;
@@ -94,9 +97,31 @@ namespace CoronaAPP
             }
 
             CountryName.Text = country;
-            Date.Text = date.Substring(0,10);
+            Date.Text = date.Substring(0, 10);
             ConfD.Text = deaths;
             ConfC.Text = cases;
+
+        }
+
+        private void SaveToDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            Database database = new Database();
+            string query = "INSERT INTO history (`country`,`date`,`confC`,`confD`) VALUES(@country,@date,@confC,@confD)";
+            SQLiteCommand myCommand = new SQLiteCommand(query, database.myConnection);
+
+            database.myConnection.Open();
+
+            myCommand.Parameters.AddWithValue("@country", CountryName.Text);
+            myCommand.Parameters.AddWithValue("@date", Date.Text);
+            myCommand.Parameters.AddWithValue("@confC", ConfC.Text);
+            myCommand.Parameters.AddWithValue("@confD", ConfD.Text);
+
+            myCommand.ExecuteNonQuery();
+            database.myConnection.Close();
+        }
+
+        private void SaveAsTxt_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

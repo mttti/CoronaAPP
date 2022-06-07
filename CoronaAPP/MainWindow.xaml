@@ -63,7 +63,7 @@
                  FontSize="50"
                  FontFamily="Lato"
                  TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="White"
-                 >Poland</TextBox>
+                 ></TextBox>
         <TextBox x:Name="Date"
                  Grid.Row="1"
                  Grid.Column="1"
@@ -73,7 +73,7 @@
                  FontSize="50"
                  FontFamily="Lato"
                  TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="White"
-                 >11-11-1111
+                 >
         </TextBox>
         <TextBox x:Name="ConfC"
                  Grid.Row="2"
@@ -84,7 +84,7 @@
                  FontSize="50"
                  FontFamily="Lato"
                  TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="White"
-                 >000000
+                 >
         </TextBox>
         <TextBox x:Name="ConfD"
                  Grid.Row="3"
@@ -95,7 +95,7 @@
                  FontSize="50"
                  FontFamily="Lato"
                  TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="White"
-                 >000000
+                 >
         </TextBox>
 
         <Button x:Name="Search"
@@ -118,7 +118,8 @@
             Margin="10"
             FontFamily="Lato"
             FontSize="45"
-            HorizontalAlignment="Center" VerticalAlignment="Center" 
+            HorizontalAlignment="Center" VerticalAlignment="Center" Click="SaveToDatabase_Click" 
+            IsEnabled="false"
             >Save to database</Button>
         <Button x:Name="SaveAsTxt"
             Background="White"
@@ -129,7 +130,8 @@
             Margin="10"
             FontFamily="Lato"
             FontSize="45"
-            HorizontalAlignment="Center" VerticalAlignment="Center" 
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            IsEnabled="False" Click="SaveAsTxt_Click"
             >Save as txt</Button>
 
         <ComboBox x:Name="SelectCountry"
