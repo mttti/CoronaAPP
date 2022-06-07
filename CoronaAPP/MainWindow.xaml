@@ -107,7 +107,7 @@
             Margin="10"
             FontFamily="Lato"
             FontSize="50"
-            HorizontalAlignment="Center" VerticalAlignment="Center" 
+            HorizontalAlignment="Center" VerticalAlignment="Center" Click="Search_Click" 
             >SEARCH</Button>
         <Button x:Name="SaveToDatabase"
             Background="White"
@@ -143,6 +143,6 @@
                   Margin="10"
                   Padding="10"
             ></ComboBox>
-        
+
     </Grid>
 </Window>
