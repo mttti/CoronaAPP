@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -17,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 
 
@@ -27,32 +29,28 @@ namespace CoronaAPP
     /// </summary>
     public partial class MainWindow : Window
     {
-        public class Root
-        {
-            public string Country_text { get; set; }
-
-            [JsonProperty("Last Update")]
-            public string LastUpdate { get; set; }
-
-            [JsonProperty("Total Cases_text")]
-            public string TotalCasesText { get; set; }
-
-            [JsonProperty("Total Deaths_text")]
-            public string TotalDeathsText { get; set; }
-
-        }
+        
         List<Root> CountriesList = new List<Root>();
 
         private void DownloadJasonData()
         {
-            WebClient client = new WebClient();
-            client.Headers.Add("Accept", "application/json");
-            string jsonResponse = client.DownloadString("https://covid-19.dataflowkit.com/v1");
-
-            CountriesList = JsonConvert.DeserializeObject<List<Root>>(jsonResponse);
-
+            try
+            {
+                WebClient client = new WebClient();
+                client.Headers.Add("Accept", "application/json");
+                string jsonResponse = client.DownloadString("https://covid-19.dataflowkit.com/v1");
+                CountriesList = JsonConvert.DeserializeObject<List<Root>>(jsonResponse);
+            }
+            catch (Exception ex)
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Title = "Odczyt z pliku JSON";
+                dialog.Filter = "Plik(*.json)|*.json";
+                string fileResponse = File.ReadAllText(@"api.json");
+                CountriesList = JsonConvert.DeserializeObject<List<Root>>(fileResponse);
+                MessageBox.Show("Currently API is unavailable.\nData dowloaded from file.");
+            }     
             CountriesList = CountriesList.OrderBy(x => x.Country_text).ToList();
-
         }
 
         public MainWindow()
@@ -78,7 +76,7 @@ namespace CoronaAPP
         private void Search_Click(object sender, RoutedEventArgs e)
         {
             SaveToDatabase.IsEnabled = true;
-            SaveAsTxt.IsEnabled = true;
+            ShowDatabase.IsEnabled = true;
             string country = "";
             string date = "";
             string deaths = "";
@@ -97,10 +95,30 @@ namespace CoronaAPP
             }
 
             CountryName.Text = country;
-            Date.Text = date.Substring(0, 10);
-            ConfD.Text = deaths;
-            ConfC.Text = cases;
-
+            try
+            {
+                Date.Text = date.Substring(0, 10);
+            }
+            catch (Exception ex)
+            {
+                Date.Text = "No data";
+            }
+            try
+            {
+                ConfD.Text = deaths;
+            }
+            catch (Exception ex)
+            {
+                ConfD.Text = "No data";
+            }
+            try
+            {
+                ConfC.Text = cases;
+            }
+            catch (Exception ex)
+            {
+                ConfC.Text = "No data";
+            }           
         }
 
         private void SaveToDatabase_Click(object sender, RoutedEventArgs e)
@@ -120,9 +138,11 @@ namespace CoronaAPP
             database.myConnection.Close();
         }
 
-        private void SaveAsTxt_Click(object sender, RoutedEventArgs e)
+        private void ShowDatabase_Click(object sender, RoutedEventArgs e)
         {
-
+            Window1 window1 = new Window1();
+            //this.Visibility = Visibility.Hidden;
+            window1.Show();
         }
     }
 }

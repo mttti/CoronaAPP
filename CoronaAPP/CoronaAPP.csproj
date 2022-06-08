@@ -10,15 +10,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\..\OneDrive\Pulpit\virus.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <None Remove="db.png" />
+    <None Remove="virus.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Caliburn.Micro.Core" Version="4.0.173" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.116" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="db.png" />
+    <Resource Include="virus.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </Resource>
   </ItemGroup>
 
 </Project>

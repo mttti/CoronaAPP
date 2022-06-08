@@ -1,0 +1,51 @@
+﻿<Window x:Class="CoronaAPP.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CoronaAPP"
+        mc:Ignorable="d"
+        Title="Database" Height="720" Width="1200" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
+        Icon="/db.png"
+        >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid
+            AutoGenerateColumns="False"
+            x:Name="DatabaseView"
+            AlternatingRowBackground="Gray"
+            Grid.ColumnSpan="3"
+            Grid.RowSpan="3"
+             >
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="25*" IsReadOnly="True" FontFamily="Lato"  Header="Country" Binding="{Binding country}"></DataGridTextColumn>
+                <DataGridTextColumn Width="25*" IsReadOnly="True" FontFamily="Lato" Header="Date" Binding="{Binding date}"></DataGridTextColumn>
+                <DataGridTextColumn Width="25*" IsReadOnly="True" FontFamily="Lato" Header="Confirmed cases" Binding="{Binding confC}"></DataGridTextColumn>
+                <DataGridTextColumn Width="25*" IsReadOnly="True" FontFamily="Lato" Header="Confirmed deaths" Binding="{Binding confD}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button 
+            Click="Button_Click" 
+            IsEnabled="True"
+            Grid.Row="3"
+            Grid.Column="1"   
+            Background="White"
+            BorderBrush="White"
+            Padding="10"
+            Margin="10"
+            FontFamily="Lato"
+            FontSize="50"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+                >Return</Button>
+    </Grid>
+</Window>

@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CoronaAPP"
         mc:Ignorable="d"
-        Title="CoronaAPP" Height="720" Width="1200">
+        Title="CoronaAPP" Height="720" Width="1200" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
+        Icon="/virus.png"
+        >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -121,7 +123,8 @@
             HorizontalAlignment="Center" VerticalAlignment="Center" Click="SaveToDatabase_Click" 
             IsEnabled="false"
             >Save to database</Button>
-        <Button x:Name="SaveAsTxt"
+        
+        <Button x:Name="ShowDatabase"
             Background="White"
             BorderBrush="White"
             Grid.Column="2"
@@ -131,8 +134,8 @@
             FontFamily="Lato"
             FontSize="45"
             HorizontalAlignment="Center" VerticalAlignment="Center"
-            IsEnabled="False" Click="SaveAsTxt_Click"
-            >Save as txt</Button>
+            Click="ShowDatabase_Click"
+            >Show database</Button>
 
         <ComboBox x:Name="SelectCountry"
                   Grid.Column="2"
